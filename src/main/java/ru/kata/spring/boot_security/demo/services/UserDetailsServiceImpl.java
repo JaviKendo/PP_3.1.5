@@ -12,11 +12,6 @@ import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 
 import java.util.List;
 
-/**
- * Добавить транзакции
- */
-
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;

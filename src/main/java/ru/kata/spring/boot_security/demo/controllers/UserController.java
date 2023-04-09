@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 
 import java.security.Principal;
@@ -23,10 +22,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public String showUserProfile(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+    public String showUserProfile(@PathVariable(name = "id") Long id, Model model) {
         model.addAttribute("showUserProfile",
                 userService.getUserRepository().getById(id));
-//                userService.getUserRepository().getUserByUsername(principal.getName()));
         return "user_info";
     }
 
