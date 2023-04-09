@@ -33,26 +33,11 @@
             </tbody>
         </table>
 
-        <form th:method="GET" th:action="@{/logout}">
+        <br>
+
+        <form th:method="GET" th:action="@{/logout}" th:align="center">
             <input type="submit" value="Logout"/>
         </form>
-
-        <!--        <table th:border="0" th:width="500" th:height="50" th:align="center">-->
-        <!--            <tbody>-->
-        <!--            <tr th:align="center">-->
-        <!--                <td>-->
-        <!--                    <form th:method="GET" th:action="@{/users/{id}/editUser(id=${showUser.getId()})}">-->
-        <!--                        <input th:type="submit" value="Edit user"/>-->
-        <!--                    </form>-->
-        <!--                </td>-->
-        <!--                <td>-->
-        <!--                    <form th:method="DELETE" th:action="@{/users/{id}(id=${showUser.getId()})}">-->
-        <!--                        <input th:type="submit" value="Delete user"/>-->
-        <!--                    </form>-->
-        <!--                </td>-->
-        <!--            </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
 
     </th:block>
 </div>

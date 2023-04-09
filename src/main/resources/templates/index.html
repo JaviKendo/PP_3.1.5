@@ -10,19 +10,12 @@
 
 <body>
 
-<h1>Create New User</h1>
+<h1 th:align="center">Hello!</h1>
 
 <div>
-    <form th:method="GET" th:action="@{/logout}" th:align="center">
-        <input th:type="submit" value="Logout"/>
-    </form>
     <form th:method="GET" th:action="@{/admin}" th:align="center">
         <input th:type="submit" value="Show users"/>
     </form>
-    <form th:method="GET" th:action="@{/user}" th:align="center">
-        <input th:type="submit" value="My profile"/>
-    </form>
-<!--    <input th:type="submit" value="My profile" onclick="window.location.href = 'user'"/>-->
 </div>
 
 </body>

@@ -9,8 +9,10 @@
 <body>
 <div th:align="center">
 	<h1>Create New User</h1>
-	<br />
-	<form action="#" th:action="@{/save}" th:object="${user}" method="post">
+
+	<br>
+
+	<form action="#" th:action="@{/admin/save}" th:object="${user}" method="post">
 
 		<table th:border="0" th:cellpadding="10">
 			<tr>
@@ -42,7 +44,7 @@
 				<td><input type="text" th:field="*{enabled}" /></td>
 			</tr>
 		</table>
-		<button type="submit">Save</button>
+		<button type="submit">Add</button>
 	</form>
 </div>
 </body>
