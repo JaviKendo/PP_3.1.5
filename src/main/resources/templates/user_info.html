@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>User Profile</title>
+</head>
+
+<body>
+
+<h1 th:align="center">User, welcome to your profile!</h1>
+
+<br>
+
+<div>
+    <th:block>
+        <table th:border="5" th:width="500" th:height="50" th:align="center" th:cellspacing="5" th:bgcolor="bisque">
+            <thead>
+            <tr th:bgcolor="Plum">
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Username</th>
+                <th>Age</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:align="center" th:bgcolor="LightYellow">
+                <td th:text="${showUserProfile.getFirstName()}"></td>
+                <td th:text="${showUserProfile.getLastName()}"></td>
+                <td th:text="${showUserProfile.getUsername()}"></td>
+                <td th:text="${showUserProfile.getAge()}"></td>
+                <td th:text="${showUserProfile.getEmail()}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <form th:method="GET" th:action="@{/logout}">
+            <input type="submit" value="Logout"/>
+        </form>
+
+        <!--        <table th:border="0" th:width="500" th:height="50" th:align="center">-->
+        <!--            <tbody>-->
+        <!--            <tr th:align="center">-->
+        <!--                <td>-->
+        <!--                    <form th:method="GET" th:action="@{/users/{id}/editUser(id=${showUser.getId()})}">-->
+        <!--                        <input th:type="submit" value="Edit user"/>-->
+        <!--                    </form>-->
+        <!--                </td>-->
+        <!--                <td>-->
+        <!--                    <form th:method="DELETE" th:action="@{/users/{id}(id=${showUser.getId()})}">-->
+        <!--                        <input th:type="submit" value="Delete user"/>-->
+        <!--                    </form>-->
+        <!--                </td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+
+    </th:block>
+</div>
+</body>
+</html>

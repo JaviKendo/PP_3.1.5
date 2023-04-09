@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Spring Security Example</title>
-</head>
-<body>
-<h1>Welcome to Index PAGE!</h1>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
+<head>
+    <meta charset="utf-8"/>
+    <title>Hello</title>
+</head>
+
+<body>
+
+<h1>Create New User</h1>
+
+<div>
+    <form th:method="GET" th:action="@{/logout}" th:align="center">
+        <input th:type="submit" value="Logout"/>
+    </form>
+    <form th:method="GET" th:action="@{/admin}" th:align="center">
+        <input th:type="submit" value="Show users"/>
+    </form>
+    <form th:method="GET" th:action="@{/user}" th:align="center">
+        <input th:type="submit" value="My profile"/>
+    </form>
+<!--    <input th:type="submit" value="My profile" onclick="window.location.href = 'user'"/>-->
+</div>
 
 </body>
+
 </html>
