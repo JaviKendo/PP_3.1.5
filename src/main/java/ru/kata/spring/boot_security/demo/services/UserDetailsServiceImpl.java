@@ -26,7 +26,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.getUserByUsername(username);
 
@@ -37,14 +36,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserDetailsImpl(user);
     }
 
-    @Transactional(readOnly = true)
     public List<User> listAll() {
         return userRepository.findAll();
     }
 
     @Transactional
-    public void save(User product) {
-        userRepository.save(product);
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
