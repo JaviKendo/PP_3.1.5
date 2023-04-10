@@ -48,6 +48,7 @@ public class AdminController {
     @RequestMapping("/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
         service.delete(id);
+
         return "redirect:/admin";
     }
 
