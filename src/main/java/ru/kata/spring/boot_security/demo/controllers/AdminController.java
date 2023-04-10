@@ -8,8 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
@@ -22,8 +20,7 @@ public class AdminController {
 
     @RequestMapping
     public String viewAdminPage(Model model) {
-        List<User> listProducts = service.listAll();
-        model.addAttribute("users", listProducts);
+        model.addAttribute("users", service.listAll());
 
         return "admin";
     }
@@ -43,8 +40,7 @@ public class AdminController {
     @RequestMapping("/edit/{id}")
     public ModelAndView showEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("edit_user");
-        User user = service.get(id);
-        mav.addObject("user", user);
+        mav.addObject("user", service.get(id));
 
         return mav;
     }
