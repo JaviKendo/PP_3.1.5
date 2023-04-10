@@ -6,15 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
+import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-    private final UserDetailsServiceImpl service;
+    private final UserServiceImpl service;
 
     @Autowired
-    public AdminController(UserDetailsServiceImpl service) {
+    public AdminController(UserServiceImpl service) {
         this.service = service;
     }
 
