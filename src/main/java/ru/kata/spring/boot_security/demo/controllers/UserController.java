@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping()
     public String showUserProfile(Model model, Principal principal) {
         model.addAttribute("showUserProfile",
-                userService.getUserRepository().getUserByUsername(principal.getName()));
+                userService.getUserRepository().getUserByUsername(principal.getName()).get());
         return "user_info";
     }
 

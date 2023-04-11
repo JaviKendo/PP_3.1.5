@@ -2,19 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
     <meta charset="utf-8"/>
     <title>Spring Security</title>
 </head>
+
 <body>
 <div sec:authorize="isAuthenticated()" th:align="center">
     Welcome <b><span sec:authentication="name">Username</span></b>
     &nbsp;
     <i><span sec:authentication="principal.authorities">Roles</span></i>
 </div>
-<!--th:align="center"-->
+
 <div th:align="center">
+
     <h1>Users List</h1>
+
     <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
         <a th:href="@{/admin/new}">
             <form>
@@ -36,7 +40,6 @@
         </tr>
         </thead>
         <tbody>
-        <!--        th:align="justify"-->
         <tr th:each="user : ${users}" th:align="center" th:bgcolor="LightYellow">
             <td>
                 <a th:href="@{/user/{id}(id=${user.getId()})}">
@@ -80,5 +83,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

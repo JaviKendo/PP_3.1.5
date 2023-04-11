@@ -8,20 +8,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public UserRepository getUserRepository() {
@@ -54,6 +59,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         if (user.isPresent()) {
             currentPassword = user.get().getPassword();
+        } else {
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.getById(4L));
+            newOrChangedUser.setRoles(roles);
         }
 
         if (!currentPassword.equals(newPassword)) {

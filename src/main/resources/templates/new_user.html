@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="https://www.thymeleaf.org"
-	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
-	<meta charset="utf-8" />
-	<title>Create New User</title>
+    <meta charset="utf-8"/>
+    <title>Create New User</title>
 </head>
+
 <body>
 <div th:align="center">
-	<h1>Create New User</h1>
 
-	<br>
+    <h1>Create New User</h1>
 
-	<form action="#" th:action="@{/admin/save}" th:object="${user}" method="post">
+    <br>
 
-		<table th:border="0" th:cellpadding="10">
-			<tr>
-				<td>Name:</td>
-				<td><input type="text" th:field="*{firstName}" /></td>
-			</tr>
-			<tr>
-				<td>Surname:</td>
-				<td><input type="text" th:field="*{lastName}" /><td>
-			</tr>
-			<tr>
-				<td>Username:</td>
-				<td><input type="text" th:field="*{username}" /></td>
-			</tr>
-			<tr>
-				<td>Age:</td>
-				<td><input type="text" th:field="*{age}" /></td>
-			</tr>
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" th:field="*{email}" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type="text" th:field="*{password}" /></td>
-			</tr>
-			<tr>
-				<td>Enabled:</td>
-				<td><input type="text" th:field="*{enabled}" /></td>
-			</tr>
-		</table>
-		<button type="submit">Add</button>
-	</form>
+    <form action="#" th:action="@{/admin/save}" th:object="${user}" method="post">
+
+        <table th:border="0" th:cellpadding="10">
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" th:field="*{firstName}"/></td>
+            </tr>
+            <tr>
+                <td>Surname:</td>
+                <td><input type="text" th:field="*{lastName}"/></td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" th:field="*{username}"/></td>
+            </tr>
+            <tr>
+                <td>Age:</td>
+                <td><input type="text" th:field="*{age}"/></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{email}"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="text" th:field="*{password}"/></td>
+            </tr>
+            <tr>
+                <td>Enabled:</td>
+                <td><input type="text" th:field="*{enabled}"/></td>
+            </tr>
+        </table>
+
+        <button type="submit">Add</button>
+    </form>
 </div>
+
 </body>
 </html>

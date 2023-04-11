@@ -11,43 +11,43 @@ import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
-    private final UserServiceImpl service;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public AdminController(UserServiceImpl service) {
-        this.service = service;
+    public AdminController(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
-    @RequestMapping
+    @GetMapping
     public String viewAdminPage(Model model) {
-        model.addAttribute("users", service.listAll());
+        model.addAttribute("users", userService.listAll());
 
         return "admin";
     }
 
-    @RequestMapping("/new")
+    @GetMapping("/new")
     public String showNewUserPage(@ModelAttribute("user") User user) {
         return "new_user";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public String saveUser(@ModelAttribute("user") User user) {
-        service.save(user);
+        userService.save(user);
 
         return "redirect:/admin";
     }
 
-    @RequestMapping("/edit/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView showEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("edit_user");
-        mav.addObject("user", service.get(id));
+        mav.addObject("user", userService.get(id));
 
         return mav;
     }
 
-    @RequestMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable(name = "id") Long id) {
-        service.delete(id);
+        userService.delete(id);
 
         return "redirect:/admin";
     }
