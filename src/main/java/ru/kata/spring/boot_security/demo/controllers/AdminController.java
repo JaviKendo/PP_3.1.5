@@ -20,7 +20,7 @@ public class AdminController {
 
     @GetMapping
     public String viewAdminPage(Model model) {
-        model.addAttribute("users", userService.listAll());
+        model.addAttribute("users", userService.getAllUsers());
 
         return "admin";
     }
@@ -32,7 +32,7 @@ public class AdminController {
 
     @PostMapping(value = "/save")
     public String saveUser(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userService.saveUser(user);
 
         return "redirect:/admin";
     }
@@ -46,7 +46,7 @@ public class AdminController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable(name = "id") Long id) {
+    public String deleteUser(@PathVariable(name = "id") Long id) {
         userService.delete(id);
 
         return "redirect:/admin";

@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,17 +43,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throw new UsernameNotFoundException("User not found!");
         }
 
-        return new UserDetailsImpl(user.get());
+        return user.get();
     }
 
     @Override
-    public List<User> listAll() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
     @Transactional
-    public void save(User newOrChangedUser) {
+    public void saveUser(User newOrChangedUser) {
         Optional<User> user = userRepository.getUserByUsername(newOrChangedUser.getUsername());
         String newPassword = newOrChangedUser.getPassword();
         String currentPassword = "";
