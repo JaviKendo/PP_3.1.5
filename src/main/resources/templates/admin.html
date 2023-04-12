@@ -64,11 +64,14 @@
             </td>
             <td th:width="70" th:height="50">
                 <div sec:authorize="hasAuthority('ADMIN')" th:align="center">
-                    <a th:href="@{'/admin/delete/' + ${user.getId()}}">
-                        <form>
-                            <input type="button" value="Delete"/>
-                        </form>
-                    </a>
+                    <!--                    <a th:href="@{'/admin/delete/' + ${user.getId()}}">-->
+                    <!--                        <form>-->
+                    <!--                            <input type="button" value="Delete"/>-->
+                    <!--                        </form>-->
+                    <!--                    </a>-->
+                    <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                        <input type="submit" value="Delete"/>
+                    </form>
                 </div>
             </td>
         </tr>

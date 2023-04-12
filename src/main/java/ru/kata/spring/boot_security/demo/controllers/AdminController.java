@@ -23,6 +23,7 @@ public class AdminController {
     @GetMapping()
     public String viewAdminPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());
+        
         return "admin";
     }
 
@@ -42,65 +43,29 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @GetMapping(value = "/{id}/editUser")
-//    public String editUser(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "edit-user";
-//    }
-//
-//    @PatchMapping(value = "/{id}")
-//    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "/edit-user";
-//        }
-//
-//        userService.updateUser(user);
-//        return "redirect:/users";
-//    }
+    @GetMapping(value = "/edit/{id}")
+    public String showUserEditPage(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
 
+        return "edit_user";
+    }
 
+    @PatchMapping(value = "/saveUpdatedUser/{id}")
+    public String updateUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/edit_user";
+        }
 
+        userService.updateUser(user);
 
+        return "redirect:/admin";
+    }
 
-//    @PostMapping(value = "/save")
-//    public String saveUser(@ModelAttribute("user") @Valid User user) {
-//        userService.saveNewUser(user);
-//
-//        return "redirect:/admin";
-//    }
+    @DeleteMapping(value = "/delete/{id}")
+    public String removeUser(@PathVariable("id") Long id) {
+        userService.removeUserById(id);
 
-//    @PostMapping()
-//    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "/add-user";
-//        }
-//
-//        userService.saveUser(user);
-//        return "redirect:/users";
-//    }
-
-//    @GetMapping("/edit/{id}")
-//    public ModelAndView showEditUserPage(@PathVariable(name = "id") Long id) {
-//        ModelAndView mav = new ModelAndView("edit_user");
-//        mav.addObject("user", userService.getUserById(id));
-//
-//        return mav;
-//    }
-
-
-
-
-//    @DeleteMapping(value = "/delete/{id}")
-//    public String removeUser(@PathVariable("id") Long id) {
-//        userService.removeUserById(id);
-//
-//        return "redirect:/users";
-//    }
-//
-//    @GetMapping(value = "/{id}")
-//    public String showUserById(@PathVariable("id") long id, Model model) {
-//        model.addAttribute("showUser", userService.getUserById(id));
-//        return "show-user-info";
-//    }
+        return "redirect:/admin";
+    }
 
 }
