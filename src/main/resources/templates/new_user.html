@@ -5,51 +5,117 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Create New User</title>
+    <title>Create new user</title>
 </head>
 
 <body>
 <div th:align="center">
 
-    <h1>Create New User</h1>
+    <h1>Enter user data</h1>
 
     <br>
 
-    <form action="#" th:action="@{/admin/save}" th:object="${user}" method="post">
+    <form th:method="POST" th:action="@{/admin/createNewUser}" th:object="${user}">
 
         <table th:border="0" th:cellpadding="10">
-            <tr>
-                <td>Name:</td>
-                <td><input type="text" th:field="*{firstName}"/></td>
+            <tbody>
+            <tr th:align="center">
+                <td>
+                    <label th:for="firstName">Name: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{firstName}" id="firstName"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                        <p>Name error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Surname:</td>
-                <td><input type="text" th:field="*{lastName}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="lastName">Surname: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{lastName}" id="lastName"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                        <p>Surname error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Username:</td>
-                <td><input type="text" th:field="*{username}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="username">Username: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{username}" id="username"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                        <p>Username error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Age:</td>
-                <td><input type="text" th:field="*{age}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="age">Age: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{age}" id="age"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">
+                        <p>Age error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Email:</td>
-                <td><input type="text" th:field="*{email}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="email">Email: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{email}" id="email"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                        <p>Email error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="text" th:field="*{password}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="password">Password: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{password}" id="password"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                        <p>Password error</p>
+                    </div>
+                </td>
             </tr>
-            <tr>
-                <td>Enabled:</td>
-                <td><input type="text" th:field="*{enabled}"/></td>
+            <tr th:align="center">
+                <td>
+                    <label th:for="enabled">Enabled: </label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{enabled}" id="enabled"/>
+                </td>
+                <td>
+                    <div style="color: red" th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}">
+                        <p>Enabled error</p>
+                    </div>
+                </td>
             </tr>
+            </tbody>
         </table>
 
         <button type="submit">Add</button>
     </form>
+
 </div>
 
 </body>

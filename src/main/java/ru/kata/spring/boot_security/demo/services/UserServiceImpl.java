@@ -50,28 +50,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    @Transactional
-    public void saveUser(User newOrChangedUser) {
-        Optional<User> user = userRepository.getUserByUsername(newOrChangedUser.getUsername());
-        String newPassword = newOrChangedUser.getPassword();
-        String currentPassword = "";
-
-        if (user.isPresent()) {
-            currentPassword = user.get().getPassword();
-        } else {
-            Set<Role> roles = new HashSet<>();
-            roles.add(roleRepository.getById(4L));
-            newOrChangedUser.setRoles(roles);
-        }
-
-        if (!currentPassword.equals(newPassword)) {
-            newOrChangedUser.setPassword(passwordEncoder.encode(newOrChangedUser.getPassword()));
-        }
-
-        userRepository.save(newOrChangedUser);
-    }
-
-    @Override
     public User getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
 
@@ -84,7 +62,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void addNewUser(User newUser) {
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleRepository.getById(4L));
+        newUser.setRoles(roles);
+
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+
+        userRepository.save(newUser);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(User updatedUser) {
+        Optional<User> user = userRepository.findById(updatedUser.getId());
+        String newPassword = updatedUser.getPassword();
+        String currentPassword = "";
+
+        if (user.isPresent()) {
+            currentPassword = user.get().getPassword();
+        }
+
+        if (!currentPassword.equals(newPassword)) {
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
+
+        userRepository.save(updatedUser);
+    }
+
+    @Override
+    @Transactional
+    public void removeUserById(Long id) {
         userRepository.deleteById(id);
     }
 

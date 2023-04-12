@@ -20,7 +20,7 @@
     <h1>Users List</h1>
 
     <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
-        <a th:href="@{/admin/new}">
+        <a th:href="@{/admin/showPageToAddUser}">
             <form>
                 <input type="button" value="Create New User"/>
             </form>
