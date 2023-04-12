@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -51,7 +50,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    @Query("select u from User u left join fetch u.roles where u.username=:username")
     public void save(User newOrChangedUser) {
         Optional<User> user = userRepository.getUserByUsername(newOrChangedUser.getUsername());
         String newPassword = newOrChangedUser.getPassword();
