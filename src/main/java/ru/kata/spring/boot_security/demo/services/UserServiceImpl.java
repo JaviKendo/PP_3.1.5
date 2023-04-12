@@ -1,10 +1,12 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.Role;
@@ -22,10 +24,12 @@ import java.util.Set;
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserRepository getUserRepository() {
@@ -64,7 +68,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         if (!currentPassword.equals(newPassword)) {
-            newOrChangedUser.setPassword(getEncodedPasswordBCrypt(newPassword));
+            newOrChangedUser.setPassword(passwordEncoder.encode(newOrChangedUser.getPassword()));
         }
 
         userRepository.save(newOrChangedUser);
@@ -85,11 +89,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    public String getEncodedPasswordBCrypt(String password) {
-        return new BCryptPasswordEncoder().encode(password);
     }
 
 }

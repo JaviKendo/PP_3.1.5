@@ -13,6 +13,6 @@ public interface UserService {
 
     void delete(Long id);
 
-    String getEncodedPasswordBCrypt(String password);
+//    String getEncodedPasswordBCrypt(String password);
 
 }
