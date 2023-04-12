@@ -45,6 +45,8 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "password")
+    @NotEmpty(message = "Password should not be empty")
+    @Size(min = 1, max = 70, message = "Username should be between 1 or 70 characters")
     private String password;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,

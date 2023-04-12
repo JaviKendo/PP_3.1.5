@@ -23,7 +23,7 @@ public class AdminController {
     @GetMapping()
     public String viewAdminPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        
+
         return "admin";
     }
 
@@ -35,7 +35,7 @@ public class AdminController {
     @PostMapping(value = "/createNewUser")
     public String createNewUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/new_user";
+            return "/new_user";
         }
 
         userService.addNewUser(user);
