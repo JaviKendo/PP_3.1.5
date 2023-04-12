@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/login", "/error").permitAll()
                 .antMatchers("/user").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
@@ -54,9 +54,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .loginProcessingUrl("/process_login")
+                .defaultSuccessUrl("/", true)
+                .successHandler(successUserHandler)
+                .failureUrl("/login?error")
                 .and()
-                .logout().permitAll()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
     }
