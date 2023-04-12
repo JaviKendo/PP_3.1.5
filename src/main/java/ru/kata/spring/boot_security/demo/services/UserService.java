@@ -9,10 +9,8 @@ public interface UserService {
 
     void saveUser(User user);
 
-    User get(Long id);
+    User getUserById(Long id);
 
     void delete(Long id);
-
-//    String getEncodedPasswordBCrypt(String password);
 
 }

@@ -40,7 +40,7 @@ public class AdminController {
     @GetMapping("/edit/{id}")
     public ModelAndView showEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("edit_user");
-        mav.addObject("user", userService.get(id));
+        mav.addObject("user", userService.getUserById(id));
 
         return mav;
     }
