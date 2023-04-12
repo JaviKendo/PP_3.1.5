@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Spring Security</title>
+    <title>Admin page</title>
 </head>
 
 <body>
@@ -17,16 +17,16 @@
 
 <div th:align="center">
 
-    <h1>Users List</h1>
+    <h1>Users list</h1>
 
-    <div sec:authorize="hasAnyAuthority('CREATOR', 'ADMIN')">
-        <a th:href="@{/admin/showPageToAddUser}">
-            <form>
-                <input type="button" value="Create new user"/>
-            </form>
-        </a>
+    <div sec:authorize="hasAnyAuthority('ADMIN', 'CREATOR')" th:align="center">
+        <form th:method="GET" th:action="@{/admin/showPageToAddUser}">
+            <input type="submit" value="Create new user"/>
+        </form>
     </div>
+
     <br/><br/>
+
     <table th:border="5" th:width="800" th:align="center" th:cellspacing="5" th:bgcolor="bisque">
         <thead>
         <tr th:bgcolor="Plum">
@@ -42,11 +42,11 @@
         <tbody>
         <tr th:each="user : ${users}" th:align="center" th:bgcolor="LightYellow">
             <td>
-                <a th:href="@{/user/{id}(id=${user.getId()})}">
-                    <form>
-                        <input type="button" value="Profile"/>
+                <div sec:authorize="hasAnyAuthority('ADMIN', 'CREATOR', 'EDITOR')" th:align="center">
+                    <form th:method="GET" th:action="@{/user/{id}(id=${user.getId()})}">
+                        <input type="submit" value="Profile"/>
                     </form>
-                </a>
+                </div>
             </td>
             <td th:text="${user.getFirstName()}">Name</td>
             <td th:text="${user.getLastName()}">Surname</td>
@@ -55,20 +55,13 @@
             <td th:text="${user.getEmail()}">Email</td>
             <td th:width="70" th:height="50">
                 <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:align="center">
-                    <a th:href="@{'/admin/edit/' + ${user.getId()}}">
-                        <form>
-                            <input type="button" value="Edit"/>
-                        </form>
-                    </a>
+                    <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
+                        <input type="submit" value="Edit"/>
+                    </form>
                 </div>
             </td>
             <td th:width="70" th:height="50">
                 <div sec:authorize="hasAuthority('ADMIN')" th:align="center">
-                    <!--                    <a th:href="@{'/admin/delete/' + ${user.getId()}}">-->
-                    <!--                        <form>-->
-                    <!--                            <input type="button" value="Delete"/>-->
-                    <!--                        </form>-->
-                    <!--                    </a>-->
                     <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
                         <input type="submit" value="Delete"/>
                     </form>
@@ -81,7 +74,7 @@
     <br><br>
 
     <div>
-        <form th:action="@{/logout}" method="post" th:align="center">
+        <form th:method="GET" th:action="@{/logout}" th:align="center">
             <input type="submit" value="Logout"/>
         </form>
     </div>

@@ -173,4 +173,11 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void addUserRole(Role role) {
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+        }
+        this.roles.add(role);
+    }
+
 }

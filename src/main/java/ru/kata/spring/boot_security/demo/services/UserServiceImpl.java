@@ -63,10 +63,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void addNewUser(User newUser) {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(4L));
-        newUser.setRoles(roles);
-
+        newUser.addUserRole(roleRepository.getById(4L));
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         userRepository.save(newUser);
@@ -81,6 +78,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         if (user.isPresent()) {
             currentPassword = user.get().getPassword();
+            updatedUser.setRoles(user.get().getRoles());
         }
 
         if (!currentPassword.equals(newPassword)) {
