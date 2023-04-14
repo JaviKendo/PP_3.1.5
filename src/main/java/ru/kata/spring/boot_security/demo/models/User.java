@@ -31,8 +31,8 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "username")
-    @NotEmpty(message = "Username should not be empty")
-    @Size(min = 4, max = 50, message = "Username should be between 4 or 50 characters")
+//    @NotEmpty(message = "Username should not be empty")
+//    @Size(min = 4, max = 50, message = "Username should be between 4 or 50 characters")
     private String username;
 
     @Column(name = "age")
@@ -40,8 +40,8 @@ public class User implements UserDetails {
     private byte age;
 
     @Column(name = "email")
-    @NotEmpty(message = "Email should not be empty")
-    @Email(message = "Email should be valid")
+//    @NotEmpty(message = "Email should not be empty")
+//    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "password")
@@ -59,7 +59,7 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    private boolean enabled;
+    private boolean enabled = true;
 
     public User() {
     }
@@ -117,6 +117,10 @@ public class User implements UserDetails {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getS() {
+        return "ADMIN";
     }
 
     public void setEmail(String email) {
@@ -180,6 +184,15 @@ public class User implements UserDetails {
             this.roles = new HashSet<>();
         }
         this.roles.add(role);
+    }
+
+    public String getAllRolesAsString() {
+        StringBuilder finishedString = new StringBuilder();
+        for (Role role : roles) {
+            finishedString.append(role.getName()).append(", ");
+        }
+
+        return finishedString.substring(0, finishedString.length() - 2);
     }
 
 }

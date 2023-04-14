@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.getUserByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.getUserByUsername(username);
 
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void addNewUser(User newUser) {
         newUser.addUserRole(roleRepository.getById(4L));
+        newUser.setUsername(newUser.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         userRepository.save(newUser);
@@ -76,6 +77,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (user.isPresent()) {
             currentPassword = user.get().getPassword();
             updatedUser.setRoles(user.get().getRoles());
+            updatedUser.setEmail(updatedUser.getUsername());
         }
 
         if (!currentPassword.equals(newPassword)) {
