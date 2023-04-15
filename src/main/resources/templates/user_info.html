@@ -13,44 +13,94 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>User Profile</title>
+    <!-- My CSS -->
+    <link th:href="@{/styles/css/main.css}" rel="stylesheet"/>
+
+    <title>User page</title>
 </head>
 
 <body>
 
-<h1 th:align="center">User, welcome to your profile!</h1>
+<header>
+    <div>
+        <nav class="navbar navbar-dark bg-dark text-white">
+            <div class="container-fluid justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div sec:authorize="isAuthenticated()" th:align="center" th:object="${showUserProfile}">
+                        <b><span sec:authentication="name">Username</span></b>
+                        with roles:
+                        <i><span th:text="${showUserProfile.getAllRolesAsString()}">Roles</span></i>
+                    </div>
+                </div>
+                <div>
+                    <form th:method="POST" th:action="@{/logout}" th:align="center">
+                        <button type="submit" class="btn btn-dark" value="Logout">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
 
-<br>
+<div class="container-fluid">
 
-<div>
-    <th:block>
-        <table th:border="5" th:width="500" th:height="50" th:align="center" th:cellspacing="5" th:bgcolor="bisque">
-            <thead>
-            <tr th:bgcolor="Plum" th:align="center" >
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Username</th>
-                <th>Age</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:align="center" th:bgcolor="LightYellow">
-                <td th:text="${showUserProfile.getFirstName()}"></td>
-                <td th:text="${showUserProfile.getLastName()}"></td>
-                <td th:text="${showUserProfile.getUsername()}"></td>
-                <td th:text="${showUserProfile.getAge()}"></td>
-                <td th:text="${showUserProfile.getEmail()}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-md-2 flex-column noPadding">
+            <div>
+                <br>
+                <div class="list-group flex-column" id="list-tab" role="tablist">
+                    <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR', 'CREATOR')">
+                        <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list"
+                           href="#list-admin" role="tab" aria-controls="home"
+                           onclick="document.location='/admin'">Admin</a>
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR', 'CREATOR', 'USER')">
+                        <a class="list-group-item list-group-item-action active" id="list-profile-list"
+                           data-toggle="list"
+                           href="#list-profile-user" role="tab" aria-controls="profile">User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <br>
+        <div class="col-md-10 mySplit">
+            <h1 class="h1UserInformationPage">User information-page</h1>
 
-        <form th:method="POST" th:action="@{/logout}" th:align="center">
-            <input type="submit" value="Logout"/>
-        </form>
-    </th:block>
+            <div class="card">
+
+                <div class="card-block">
+                    <table class="table table-hover myTable table-striped">
+                        <tr>
+                            <td>
+                                <h4>About user</h4>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-hover table-striped table-responsive-lg userInfoTable">
+                        <thead>
+                        <tr>
+                            <th class="thId2">ID</th>
+                            <th class="thFirstname2">First Name</th>
+                            <th class="thLastname2">Last Name</th>
+                            <th class="thAge2">Age</th>
+                            <th class="thEmail2">Email</th>
+                            <th class="thRole2">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${showUserProfile.getId()}"></td>
+                            <td th:text="${showUserProfile.getFirstName()}"></td>
+                            <td th:text="${showUserProfile.getLastName()}"></td>
+                            <td th:text="${showUserProfile.getAge()}"></td>
+                            <td th:text="${showUserProfile.getEmail()}"></td>
+                            <td th:text="${showUserProfile.getAllRolesAsString()}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

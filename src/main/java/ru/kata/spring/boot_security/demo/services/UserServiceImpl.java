@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
@@ -17,17 +16,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public UserRepository getUserRepository() {
-        return userRepository;
     }
 
     @Override
@@ -60,7 +53,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void addNewUser(User newUser) {
-        newUser.addUserRole(roleRepository.getById(4L));
         newUser.setUsername(newUser.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
@@ -76,8 +68,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         if (user.isPresent()) {
             currentPassword = user.get().getPassword();
-            updatedUser.setRoles(user.get().getRoles());
-            updatedUser.setEmail(updatedUser.getUsername());
+            updatedUser.setUsername(updatedUser.getEmail());
         }
 
         if (!currentPassword.equals(newPassword)) {

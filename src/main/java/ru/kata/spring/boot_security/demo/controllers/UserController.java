@@ -23,15 +23,15 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public String showUserProfile(@PathVariable(name = "id") Long id, Model model) {
-        model.addAttribute("showUserProfile",
-                userService.getUserRepository().getById(id));
+        model.addAttribute("showUserProfile", userService.getUserById(id));
+
         return "user_info";
     }
 
     @GetMapping()
     public String showUserProfile(Model model, Principal principal) {
-        model.addAttribute("showUserProfile",
-                userService.getUserRepository().getUserByUsername(principal.getName()).get());
+        model.addAttribute("showUserProfile", userService.loadUserByUsername(principal.getName()));
+
         return "user_info";
     }
 
