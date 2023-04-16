@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void updateUser(User updatedUser) {
         Optional<User> user = userRepository.findById(updatedUser.getId());
-        String newPassword = updatedUser.getPassword();
         String currentPassword = "";
 
         if (user.isPresent()) {
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             updatedUser.setUsername(updatedUser.getEmail());
         }
 
-        if (!currentPassword.equals(newPassword)) {
+        if (!currentPassword.equals(updatedUser.getPassword())) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
 
