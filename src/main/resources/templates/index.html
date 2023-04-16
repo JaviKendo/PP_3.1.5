@@ -20,16 +20,27 @@
 
 <h1 th:align="center">Hello!</h1>
 
-<div>
-    <form th:method="GET" th:action="@{/admin}" th:align="center">
-        <input th:type="submit" value="Show users"/>
-    </form>
+<br>
+
+<div class="col-10 offset-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+
+    <div>
+        <form th:method="GET" th:action="@{/admin}" th:align="center">
+            <div class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <button type="submit" class="btn btn-info btn-md btn-block" value="Show users">Show users</button>
+            </div>
+        </form>
+    </div>
 
     <br>
 
-    <form th:method="POST" th:action="@{/logout}" th:align="center">
-        <input type="submit" value="Logout"/>
-    </form>
+    <div>
+        <form th:method="POST" th:action="@{/logout}" th:align="center">
+            <div class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <button type="submit" class="btn btn-warning btn-md btn-block" value="Logout">Logout</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

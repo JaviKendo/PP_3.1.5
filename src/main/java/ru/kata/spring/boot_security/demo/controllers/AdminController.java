@@ -7,7 +7,6 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -32,14 +31,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/createNewUser")
-    public String createNewUser(@ModelAttribute("user") @Valid User user) {
+    public String createNewUser(@ModelAttribute("user") User user) {
         userService.addNewUser(user);
 
         return "redirect:/admin";
     }
 
     @PatchMapping(value = "/saveUpdatedUser/{id}")
-    public String updateUser(@ModelAttribute("user") @Valid User user) {
+    public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
 
         return "redirect:/admin";
