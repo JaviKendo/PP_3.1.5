@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void updateUser(User updatedUser) {
-        User user = getUserById(updatedUser.getId());
+        User user = this.getUserById(updatedUser.getId());
 
         updatedUser.setUsername(updatedUser.getEmail());
         if (!updatedUser.getPassword().equals(user.getPassword())) {
