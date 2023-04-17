@@ -62,15 +62,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void updateUser(User updatedUser) {
-        Optional<User> user = userRepository.findById(updatedUser.getId());
-        String currentPassword = "";
+        User user = getUserById(updatedUser.getId());
 
-        if (user.isPresent()) {
-            currentPassword = user.get().getPassword();
-            updatedUser.setUsername(updatedUser.getEmail());
-        }
-
-        if (!currentPassword.equals(updatedUser.getPassword())) {
+        updatedUser.setUsername(updatedUser.getEmail());
+        if (!updatedUser.getPassword().equals(user.getPassword())) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
 

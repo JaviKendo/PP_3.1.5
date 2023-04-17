@@ -1,13 +1,12 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
-
-import java.security.Principal;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -21,9 +20,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public String viewAdminPage(Model model, Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
-        model.addAttribute("userInf", userService.getUserById(user.getId()));
+    public String getAdminPage(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("userInf", user);
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("roles", roleService.getAllRoles());
 
