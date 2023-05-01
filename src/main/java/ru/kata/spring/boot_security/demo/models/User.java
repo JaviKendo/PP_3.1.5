@@ -13,7 +13,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class   User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,6 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(name = "username")
-    @NotEmpty(message = "Username should not be empty")
     private String username;
 
     @Column(name = "age")
@@ -48,7 +47,7 @@ public class User implements UserDetails {
     @Size(min = 1, max = 70, message = "Username should be between 1 or 70 characters")
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToMany(cascade = {CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH},
             fetch = FetchType.LAZY)
     @JoinTable(
@@ -118,10 +117,6 @@ public class User implements UserDetails {
         return email;
     }
 
-    public String getS() {
-        return "ADMIN";
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -178,13 +173,18 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getAllRolesAsString() {
-        StringBuilder finishedString = new StringBuilder();
-        for (Role role : roles) {
-            finishedString.append(role.getName()).append(", ");
-        }
-
-        return finishedString.substring(0, finishedString.length() - 2);
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
     }
 
 }

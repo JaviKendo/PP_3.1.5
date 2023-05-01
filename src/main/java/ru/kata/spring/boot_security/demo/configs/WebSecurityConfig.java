@@ -3,12 +3,12 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.authentication.dao.*;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 @Configuration
@@ -44,13 +44,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable().httpBasic()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/login", "/error").permitAll()
                 .antMatchers("/user").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/admin").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
-                .antMatchers("/admin/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-                .antMatchers("/admin/delete/**").hasAuthority("ADMIN")
+                .antMatchers("/api/user/getUserInfo").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
+                .antMatchers("/api/admin/addNewUser/**").hasAnyAuthority("CREATOR", "ADMIN")
+                .antMatchers("/api/admin/updateUser/**").hasAnyAuthority("ADMIN", "EDITOR")
+                .antMatchers("/api/admin/removeUser/**").hasAuthority("ADMIN")
+                .antMatchers("/api/**").hasAnyAuthority("CREATOR", "EDITOR", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

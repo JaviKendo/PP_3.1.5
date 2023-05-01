@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         Optional<User> user = userRepository.getUserByUsername(username);
 
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found!");
+            throw new UsernameNotFoundException(String.format("There is no user with username - %s in database", user));
         }
 
         return user.get();
@@ -40,11 +40,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException(String.format("There is no user with ID = %d in database", id));
+        }
+
+        return user;
+    }
+
+    @Override
     public User getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
 
         if (user.isEmpty()) {
-            throw new IllegalArgumentException("User not found!");
+            throw new IllegalArgumentException(String.format("There is no user with ID = %d in database", id));
         }
 
         return user.get();
@@ -62,10 +73,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void updateUser(User updatedUser) {
-        User user = this.getUserById(updatedUser.getId());
-
         updatedUser.setUsername(updatedUser.getEmail());
-        if (!updatedUser.getPassword().equals(user.getPassword())) {
+
+        if (!updatedUser.getPassword().equals(this.getUserById(updatedUser.getId()).getPassword())) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         }
 

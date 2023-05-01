@@ -12,7 +12,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 public class UserController {
 
     @GetMapping()
-    public String showUserProfile(Model model, @AuthenticationPrincipal User user) {
+    public String getUserPage(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("showUserProfile", user);
 
         return "user_info";
